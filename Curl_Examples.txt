@@ -1,0 +1,6 @@
+# get a list of all defined relays
+curl -ihttp://localhost:80/WebRelay/api/relays
+# get a specific relay
+curl -i http://localhost:80/WebRelay/api/relays/1
+# update state of a relay
+curl -i -H "Content-Type: application/json" -X PUT -d '{"state":"off"}' http://localhost:80/WebRelay/api/relays/1
