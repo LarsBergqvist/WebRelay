@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+  <script data-require="angular.js@1.4.8" data-semver="1.4.8" src="https://code.angularjs.org/1.4.8/angular.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+  <script src="Controller.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div ng-controller="RelaysController">
+    <h1>{{ header }}</h1>
+  </div>
+  <div ng-controller="RelaysController">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in relays">
+          <td class="vert-align">
+          {{item.id}}
+          </td>
+          <td class="vert-align">
+            <b>{{item.name}}</b>
+          </td>
+          <td class="vert-align">
+          {{item.state}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
