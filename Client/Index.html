@@ -9,11 +9,12 @@
 </head>
 
 <body>
-  <div ng-controller="RelaysController">
+<div ng-controller="RelaysControllerMock">
+  <div>
     <h1>{{ header }}</h1>
   </div>
-  <div ng-controller="RelaysController">
-    <table class="table table-striped">
+  <div>
+    <table class="table">
       <thead>
         <tr>
           <th>Id</th>
@@ -30,12 +31,13 @@
             <b>{{item.name}}</b>
           </td>
           <td class="vert-align">
-          {{item.state}}
+          <img ng-src="{{item.image}}" ng-click="toggleRelay(item.id)">
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>
 </body>
 
 </html>
