@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
-from flask import Flask, jsonify, abort, request
+from flask import Flask, jsonify, abort, request, render_template
+
 app = Flask(__name__)
 
 GPIO.setmode(GPIO.BCM)
@@ -11,7 +12,7 @@ relayStateToGPIOState = {
 
 relays = [
     { 'id' : 1, 'name' : 'Window lamp', 'state' : 'off'},
-    { 'id' : 2, 'name' : 'Floor lamp', 'state' : 'off'}
+    { 'id' : 2, 'name' : 'Floor lamp', 'state' : 'on'}
     ]
 
 relayIdToPin = {
@@ -28,7 +29,11 @@ def Setup():
 
 def UpdatePinFromRelayObject(relay):
     GPIO.output(relayIdToPin[relay['id']],relayStateToGPIOState[relay['state']])
-    
+
+@app.route('/WebRelay/', methods=['GET', 'POST'])
+def index():
+    return render_template('Index.html');
+        
 @app.route('/WebRelay/api/relays', methods=['GET'])
 def get_relays():
     return jsonify({'relays': relays})

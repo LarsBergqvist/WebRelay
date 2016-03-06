@@ -4,10 +4,10 @@ addImageToRelayObjects = function(relayObjects) {
 	for (var i=0; i < relayObjects.length; i++) {
   		relay = relayObjects[i];
 		if (relay.state == 'on') {
-			relay.image = 'on_button.gif';
+			relay.image = '/static/on_button.gif';
 		}
 		else {
-			relay.image = 'off_button.gif';		
+			relay.image = '/static/off_button.gif';		
 		}
   	}	
 
@@ -19,7 +19,7 @@ myApp.controller('RelaysController', ['$scope', '$http', function($scope, $http)
   $scope.header = 'Relay status';
   
   getRelayInfo = function() {
-    var promise = $http.get("http://localhost:80/WebRelay/api/relays");
+    var promise = $http.get("api/relays");
 
     promise.then(function(response) {
       var relays = response.data.relays;
@@ -62,11 +62,11 @@ myApp.controller('RelaysControllerMock', ['$scope', '$http', function($scope, $h
   		if (relay.id == relayid) {
 			if (relay.state == 'on') {
 				relay.state = 'off';
-				relay.image = 'off_button.gif';
+				relay.image = '/static/off_button.gif';
 			}
 			else {
 				relay.state = 'on'
-				relay.image = 'on_button.gif';		
+				relay.image = '/static/on_button.gif';		
 			}  			
 			break;
   		}
