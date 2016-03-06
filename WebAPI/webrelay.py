@@ -12,7 +12,7 @@ relayStateToGPIOState = {
 
 relays = [
     { 'id' : 1, 'name' : 'Window lamp', 'state' : 'off'},
-    { 'id' : 2, 'name' : 'Floor lamp', 'state' : 'on'}
+    { 'id' : 2, 'name' : 'Floor lamp', 'state' : 'off'}
     ]
 
 relayIdToPin = {

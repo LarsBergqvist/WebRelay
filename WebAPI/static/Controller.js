@@ -28,51 +28,32 @@ myApp.controller('RelaysController', ['$scope', '$http', function($scope, $http)
     });
   };
   
-  getRelayInfo();
-  
-}]);
-
-
-myApp.controller('RelaysControllerMock', ['$scope', '$http', function($scope, $http) {
-
-  $scope.header = 'Relay status';
-  
-  var relay1 = {
-  	'id' : '1',
-  	'name' : 'Relay1',
-  	'state' : 'off',
-  }
-
-    var relay2 = {
-  	'id' : '2',
-  	'name' : 'Relay2',
-  	'state' : 'on',
-  }
-
-  var relays = [
-  	relay1,
-  	relay2
-  ]
-
-  addImageToRelayObjects(relays);
-
-  $scope.toggleRelay = function(relayid) {
+  $scope.toggleRelay = function(relay) {
+    var newState = 'off';
+    if (relay.state == 'off')
+    {
+    	newState = 'on';
+    }
+    $http.put("/WebRelay/api/relays/"+relay.id, { state : newState}).then(function(response) {
+    	relay = response.data.relay;
+	if (relay.state == 'on') {
+		relay.image = '/static/on_button.gif';
+	}
+	else {
+		relay.image = '/static/off_button.gif';		
+	}
 	for (var i=0; i < $scope.relays.length; i++) {
-  		relay = $scope.relays[i];
-  		if (relay.id == relayid) {
-			if (relay.state == 'on') {
-				relay.state = 'off';
-				relay.image = '/static/off_button.gif';
-			}
-			else {
-				relay.state = 'on'
-				relay.image = '/static/on_button.gif';		
-			}  			
+		if ($scope.relays[i].id == relay.id)
+		{
+			$scope.relays[i] = relay;
 			break;
-  		}
-  	}	
+		}
+	}
+    	
+    }, function(error) {
+    }
+    );
   }
-  $scope.relays = relays;
-  
+  getRelayInfo();
   
 }]);
