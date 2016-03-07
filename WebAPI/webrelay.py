@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from flask import Flask, jsonify, abort, request, render_template
+from relaydefinitions import relays, relayIdToPin
 
 app = Flask(__name__)
 
@@ -8,16 +9,6 @@ GPIO.setmode(GPIO.BCM)
 relayStateToGPIOState = {
     'off' : GPIO.LOW,
     'on' : GPIO.HIGH
-    }
-
-relays = [
-    { 'id' : 1, 'name' : 'Window lamp', 'state' : 'off'},
-    { 'id' : 2, 'name' : 'Floor lamp', 'state' : 'off'}
-    ]
-
-relayIdToPin = {
-    1 : 24,
-    2 : 25
     }
 
 def Setup():
@@ -30,7 +21,7 @@ def Setup():
 def UpdatePinFromRelayObject(relay):
     GPIO.output(relayIdToPin[relay['id']],relayStateToGPIOState[relay['state']])
 
-@app.route('/WebRelay/', methods=['GET', 'POST'])
+@app.route('/WebRelay/', methods=['GET'])
 def index():
     return render_template('Index.html');
         
@@ -40,24 +31,26 @@ def get_relays():
 
 @app.route('/WebRelay/api/relays/<int:relay_id>', methods=['GET'])
 def get_relay(relay_id):
-    relay = [relay for relay in relays if relay['id'] == relay_id]
-    if len(relay) == 0:
+    matchingRelays = [relay for relay in relays if relay['id'] == relay_id]
+    if len(matchingRelays) == 0:
         abort(404)
-    return jsonify({'relay': relay[0]})
+    return jsonify({'relay': matchingRelays[0]})
 
 @app.route('/WebRelay/api/relays/<int:relay_id>', methods=['PUT'])
 def update_relay(relay_id):
-    relay = [relay for relay in relays if relay['id'] == relay_id]
-    if len(relay) == 0:
+    matchingRelays = [relay for relay in relays if relay['id'] == relay_id]
+
+    if len(matchingRelays) == 0:
         abort(404)
     if not request.json:
         abort(400)
     if not 'state' in request.json:
         abort(400)
-    state = request.json.get('state', relay[0]['state'])
-    relay[0]['state']=state
-    UpdatePinFromRelayObject(relay[0])
-    return jsonify({'relay': relay[0]})
+
+    relay = matchingRelays[0]
+    relay['state']=request.json.get('state')
+    UpdatePinFromRelayObject(relay)
+    return jsonify({'relay': relay})
 
 if __name__ == "__main__":
     print("starting...")

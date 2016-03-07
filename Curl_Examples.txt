@@ -1,5 +1,5 @@
 # get a list of all defined relays
-curl -ihttp://localhost:80/WebRelay/api/relays
+curl -i http://localhost:80/WebRelay/api/relays
 # get a specific relay
 curl -i http://localhost:80/WebRelay/api/relays/1
 # update state of a relay
