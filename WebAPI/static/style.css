@@ -18,6 +18,18 @@
     vertical-align: middle;
 }
 
+td {
+    font-size: 50px;
+}
+
+th {
+    font-size: 50px;
+}
+
+.table{
+    margin: auto;
+}
+
 form { 
 margin: 0 auto; 
 width:250px;

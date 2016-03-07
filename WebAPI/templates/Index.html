@@ -9,10 +9,9 @@
 </head>
 
 <body>
-{% raw %}
 <div ng-controller="RelaysController">
   <div>
-    <h1>{{ header }}</h1>
+    <h1 ng-bind="header"></h1>
   </div>
   <div>
     <table class="table">
@@ -25,21 +24,18 @@
       </thead>
       <tbody>
         <tr ng-repeat="item in relays">
+          <td class="vert-align" ng-bind="item.id"></td>
           <td class="vert-align">
-          {{item.id}}
+            <b ng-bind="item.name"</b>
           </td>
           <td class="vert-align">
-            <b>{{item.name}}</b>
-          </td>
-          <td class="vert-align">
-          <img ng-src="{{item.image}}" ng-click="toggleRelay(item)">
+          <img ng-src=[[item.image]] ng-click="toggleRelay(item)">
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
-{% endraw %}
 </body>
 
 </html>
