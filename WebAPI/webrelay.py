@@ -13,8 +13,6 @@ relayStateToGPIOState = {
 
 def Setup():
     for relay in relays:
-        print(relay)
-        print(relayIdToPin[relay['id']])
         GPIO.setup(relayIdToPin[relay['id']],GPIO.OUT)
         GPIO.output(relayIdToPin[relay['id']],relayStateToGPIOState[relay['state']])
 
@@ -56,7 +54,7 @@ if __name__ == "__main__":
     print("starting...")
     try:
         Setup()
-        app.run(host='0.0.0.0',port=80,debug=True)
+        app.run(host='0.0.0.0',port=80,debug=False)
     finally:
         print("cleaning up")
         GPIO.cleanup()

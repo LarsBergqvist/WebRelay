@@ -21,13 +21,12 @@ myApp.controller('RelaysController', ['$scope', '$http', function($scope, $http)
   $scope.header = 'Relay status';
   
   var getRelayInfo = function() {
-    var promise = $http.get("api/relays");
-
-    promise.then(function(response) {
+    $http.get("api/relays").then(function(response) {
       var relays = response.data.relays;
       addImageToRelayObjects(relays)
       $scope.relays = relays;
-    });
+    }, function(error) {}
+    );
   };
   
   $scope.toggleRelay = function(relay) {
@@ -50,8 +49,7 @@ myApp.controller('RelaysController', ['$scope', '$http', function($scope, $http)
                 break;
             }
         }    	
-    }, function(error) {
-    }
+    }, function(error) {}
     );
   }
   getRelayInfo();
